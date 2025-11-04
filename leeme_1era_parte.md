@@ -1,57 +1,91 @@
-🏋️‍♀️ Proyecto GYM
+Perfecto 💪 Aquí tienes un **README.md** listo para subir a GitHub con todo el contenido del documento **UII_Act2_3Tablas_PROMPT_Lucia_Nava.pdf**, ya formateado con encabezados, listas y bloques de código Markdown.
 
-Lenguaje: Python
-Framework: Django
-Editor: Visual Studio Code
+---
 
-📁 1. Crear carpeta del proyecto
+````markdown
+# 🏋️‍♀️ Proyecto GYM - Django CRUD
+
+## 📘 Información General
+
+**Proyecto:** GYM  
+**Lenguaje:** Python  
+**Framework:** Django  
+**Editor:** Visual Studio Code  
+
+---
+
+## ⚙️ Primera Parte: Configuración Inicial
+
+### 1️⃣ Crear la carpeta del proyecto
+```bash
 mkdir UIII_GYM_0433
 cd UIII_GYM_0433
+````
 
-💻 2. Abrir VS Code sobre la carpeta
+### 2️⃣ Abrir Visual Studio Code en la carpeta del proyecto
+
+```bash
 code .
+```
 
-🧭 3. Abrir terminal en VS Code
+### 3️⃣ Abrir la terminal integrada en VS Code
 
-En VS Code, ir a:
+* Menú superior → **Terminal** → **New Terminal**
 
-Ver → Terminal
+### 4️⃣ Crear el entorno virtual “.venv”
 
-🌐 4. Crear entorno virtual .venv
-
-Desde la terminal de VS Code:
-
+```bash
 python -m venv .venv
+```
 
-⚙️ 5. Activar entorno virtual
-.venv\Scripts\activate
+### 5️⃣ Activar el entorno virtual
 
+```bash
+# En Windows PowerShell
+.venv\Scripts\Activate
+```
 
-(Si usas Linux/Mac)
+### 6️⃣ Activar el intérprete de Python en VS Code
 
-source .venv/bin/activate
+* En VS Code, presionar **Ctrl + Shift + P**
+* Escribir: **Python: Select Interpreter**
+* Elegir el intérprete que apunte a `.venv`
 
-🐍 6. Activar intérprete de Python
+### 7️⃣ Instalar Django
 
-En VS Code:
-Presiona Ctrl + Shift + P → Escribe Python: Select Interpreter → selecciona el entorno .venv.
-
-📦 7. Instalar Django
+```bash
 pip install django
+```
 
-🏗️ 8. Crear proyecto sin duplicar carpeta
+### 8️⃣ Crear el proyecto `backend_Gym` sin duplicar carpetas
+
+```bash
 django-admin startproject backend_Gym .
+```
 
-🚀 9. Ejecutar servidor en el puerto 8033
+### 9️⃣ Ejecutar el servidor en el puerto 8033
+
+```bash
 python manage.py runserver 8033
+```
 
-🌍 10. Copiar y pegar el link en el navegador
+### 🔗 10️⃣ Copiar y pegar el link en el navegador
+
+```
 http://127.0.0.1:8033/
+```
 
-🧩 11. Crear aplicación app_gym
+### 11️⃣ Crear la aplicación `app_gym`
+
+```bash
 python manage.py startapp app_gym
+```
 
-🧠 12. Crear modelo en app_gym/models.py
+---
+
+## 🧩 Modelos (`models.py`)
+
+```python
 from django.db import models
 
 # ==========================================
@@ -69,13 +103,14 @@ class Miembro(models.Model):
     def __str__(self):
         return f"{self.nombre} {self.apellido}"
 
+
 # ==========================================
 # MODELO: CLASE
 # ==========================================
 class Clase(models.Model):
     nombre_clase = models.CharField(max_length=100)
     descripcion = models.TextField(blank=True, null=True)
-    horario = models.CharField(max_length=50)
+    horario = models.CharField(max_length=50)  # Ejemplo: "Lunes 10:00-11:00"
     duracion_minutos = models.IntegerField()
     cupo_maximo = models.IntegerField()
     nivel_dificultad = models.CharField(
@@ -87,10 +122,15 @@ class Clase(models.Model):
         ],
         default='Principiante'
     )
-    miembros_inscritos = models.ManyToManyField(Miembro, related_name='clases_inscritas', blank=True)
+    miembros_inscritos = models.ManyToManyField(
+        'Miembro',
+        related_name='clases_inscritas',
+        blank=True
+    )
 
     def __str__(self):
         return self.nombre_clase
+
 
 # ==========================================
 # MODELO: EMPLEADO
@@ -99,7 +139,7 @@ class Empleado(models.Model):
     nombre = models.CharField(max_length=100)
     apellido = models.CharField(max_length=100)
     fecha_contratacion = models.DateField(auto_now_add=True)
-    puesto = models.CharField(max_length=100)
+    puesto = models.CharField(max_length=100)  # Ej: "Instructor", "Recepcionista", "Gerente"
     salario = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     email = models.EmailField(unique=True)
     telefono = models.CharField(max_length=15, blank=True, null=True)
@@ -113,155 +153,178 @@ class Empleado(models.Model):
 
     def __str__(self):
         return f"{self.nombre} {self.apellido} ({self.puesto})"
+```
 
-🧱 12.5 Realizar migraciones
+---
+
+## 🧱 Migraciones
+
+12.5. Crear las migraciones y aplicarlas:
+
+```bash
 python manage.py makemigrations
 python manage.py migrate
+```
 
-👥 13. Trabajar con el modelo: Miembro
-🧭 14. Crear funciones en views.py
+---
 
-Funciones:
+## 🧮 CRUD del Modelo `Miembro`
 
-inicio_gym
+### 14️⃣ En `views.py` crear las funciones:
 
-agregar_miembro
+* `inicio_gym`
+* `agregar_miembro`
+* `actualizar_miembro`
+* `realizar_actualizacion_miembro`
+* `borrar_miembro`
 
-actualizar_miembro
+---
 
-realizar_actualizacion_miembro
+## 🧾 Estructura de Carpetas
 
-borrar_miembro
+```
+app_gym/
+│
+├── migrations/
+├── templates/
+│   ├── base.html
+│   ├── header.html
+│   ├── navbar.html
+│   ├── footer.html
+│   ├── inicio.html
+│   └── miembros/
+│       ├── agregar_miembros.html
+│       ├── ver_miembros.html
+│       ├── actualizar_miembros.html
+│       └── borrar_miembro.html
+├── models.py
+├── views.py
+├── urls.py
+└── admin.py
+```
 
-(No se usa forms.py)
+---
 
-🗂️ 15. Crear carpeta templates dentro de app_gym
-app_gym/templates/
+## 🎨 Plantillas HTML
 
-🧾 16. Crear archivos HTML dentro de templates
+### `base.html`
 
-base.html
+* Incluir **Bootstrap** para CSS y JS.
 
-header.html
+### `navbar.html`
 
-navbar.html
+Debe contener:
 
-footer.html
+* “Sistema de Administración Gym”
+* “Inicio”
+* Submenú **Miembro** con:
 
-inicio.html
+  * Agregar Miembro
+  * Ver Miembro
+  * Actualizar Miembro
+  * Borrar Miembro
+* Submenú **Clase** con:
 
-🎨 17. Agregar Bootstrap a base.html
+  * Agregar Clase
+  * Ver Clase
+  * Actualizar Clase
+  * Borrar Clase
+* Submenú **Empleado** con:
 
-Incluir links de Bootstrap CSS y JS en la plantilla base.
+  * Agregar Empleado
+  * Ver Empleado
+  * Actualizar Empleado
+  * Borrar Empleado
 
-🧭 18. En navbar.html
+> Incluir íconos en las opciones principales (no en los submenús).
 
-Incluir:
+### `footer.html`
 
-Sistema de Administración Gym
+Debe incluir:
 
-Inicio
+```
+© [Año actual] | Creado por Lucia Nava - CBTis 128
+```
 
-Menú “Miembro” con submenú:
+y mantenerse fijo al final de la página.
 
-Agregar miembro
+### `inicio.html`
 
-Ver miembro
+Contiene información del sistema y una imagen sobre gimnasio tomada de internet.
 
-Actualizar miembro
+---
 
-Borrar miembro
+## 🌐 Configuración de URLs
 
-Menú “Clase” con submenú
+### `app_gym/urls.py`
 
-Menú “Empleado” con submenú
-Agregar íconos a las opciones principales (no en los submenús).
+Contiene las rutas para las funciones CRUD de `Miembro`.
 
-🧑‍💻 19. En footer.html
+### `backend_Gym/settings.py`
 
-Incluir:
+Agregar la app:
 
-Derechos de autor ©
-Fecha del sistema
-Creado por Lucia Nava, CBTIS 128
-
-
-Mantener fijo al final de la página.
-
-🖼️ 20. En inicio.html
-
-Colocar información del sistema + una imagen de un gimnasio tomada de internet.
-
-📁 21. Crear subcarpeta para miembros
-app_gym/templates/miembros/
-
-🧩 22. Crear archivos HTML de CRUD de miembros
-
-agregar_miembros.html
-
-ver_miembros.html (mostrar tabla con botones Ver, Editar, Borrar)
-
-actualizar_miembros.html
-
-borrar_miembro.html
-
-⚠️ 23. No utilizar forms.py
-🔗 24. Crear urls.py en app_gym
-
-Enlazar las rutas a las funciones de views.py (CRUD de miembros).
-
-🧩 25. Registrar la app en settings.py
-
-En INSTALLED_APPS:
-
-'app_gym',
-
-🌐 26. Configurar urls.py del proyecto principal
-
-En backend_Gym/urls.py:
-
-from django.contrib import admin
-from django.urls import path, include
-
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('', include('app_gym.urls')),
+```python
+INSTALLED_APPS = [
+    ...
+    'app_gym',
 ]
+```
 
-🗃️ 27. Registrar modelos en admin.py
-from django.contrib import admin
-from .models import Miembro, Clase, Empleado
+### `backend_Gym/urls.py`
 
-admin.site.register(Miembro)
-admin.site.register(Clase)
-admin.site.register(Empleado)
+Configurar la conexión con `app_gym`.
 
+---
 
-Luego ejecutar:
+## 🛠️ Administración
 
+* Registrar los modelos en `admin.py`
+* Ejecutar nuevamente:
+
+```bash
 python manage.py makemigrations
 python manage.py migrate
+```
 
-⚙️ 28. Por ahora, solo trabajar con el modelo Miembro
+---
 
-Dejar pendientes los modelos Clase y Empleado.
+## 🎨 Recomendaciones de diseño
 
-🎨 29. Usar colores suaves y modernos
+* Usar **colores suaves, atractivos y modernos**.
+* Código HTML **sencillo y limpio**.
+* **No validar** la entrada de datos.
 
-Diseño limpio, atractivo y minimalista.
+---
 
-🚫 30. No validar entrada de datos.
-🏗️ 31. Crear estructura completa de carpetas y archivos desde el inicio.
-✅ 32. Proyecto totalmente funcional.
-🔁 33. Ejecutar servidor en el puerto 8033
+## 🚀 Ejecución del servidor
+
+```bash
 python manage.py runserver 8033
+```
 
+Abrir en el navegador:
 
-Luego abrir:
-
+```
 http://127.0.0.1:8033/
+```
 
+---
 
-📅 Proyecto realizado por: Lucia Nava – CBTIS 128
-🧠 Materia: Programación Web con Python y Django
-🎯 Objetivo: Sistema CRUD básico de administración para gimnasio
+## ✅ Estado del Proyecto
+
+Por ahora solo se trabaja con el modelo **Miembro**.
+Los modelos **Clase** y **Empleado** se implementarán posteriormente.
+
+---
+
+**Creado por:**
+👩‍💻 *Lucia Nava*
+📍 *CBTis 128*
+
+```
+
+---
+
+¿Quieres que le agregue una **sección final con comandos Git** (por ejemplo, cómo subir este proyecto a GitHub paso a paso)?
+```
