@@ -183,6 +183,14 @@ python manage.py migrate
 ## 🧾 Estructura de Carpetas
 
 ```
+UII-Act2-3tablas-gym_luciaAguirre/
+└── gym/
+    ├── .venv/                     # Entorno virtual
+    ├── backend_Gym/           # Configuración del proyecto
+    │   ├── __init__.py
+    │   ├── settings.py
+    │   ├── urls.py
+    │   └── wsgi.py
 app_gym/
 │
 ├── migrations/
